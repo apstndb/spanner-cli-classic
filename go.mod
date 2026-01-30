@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	cloud.google.com/go v0.120.1
-	cloud.google.com/go/spanner v1.79.0
+	cloud.google.com/go/spanner v1.80.0
 	github.com/apstndb/gsqlsep v0.0.0-20240823174243-432be37d515a
 	github.com/chzyer/readline v1.5.1
 	github.com/google/go-cmp v0.7.0
