@@ -22,6 +22,7 @@ import (
 	"time"
 
 	sppb "cloud.google.com/go/spanner/apiv1/spannerpb"
+	"github.com/google/uuid"
 	"google.golang.org/protobuf/types/known/structpb"
 	"google.golang.org/protobuf/types/known/typepb"
 
@@ -138,6 +139,11 @@ func TestDecodeColumn(t *testing.T) {
 			value: spanner.NullJSON{Value: nil, Valid: true},
 			want:  `null`,
 		},
+		{
+			desc:  "uuid",
+			value: spanner.NullUUID{UUID: uuid.MustParse("1778a92d-dcdb-4e7c-a515-b6f953b59e54"), Valid: true},
+			want:  `1778a92d-dcdb-4e7c-a515-b6f953b59e54`,
+		},
 
 		// nullable
 		{
@@ -188,6 +194,11 @@ func TestDecodeColumn(t *testing.T) {
 		{
 			desc:  "null json",
 			value: spanner.NullJSON{Value: nil, Valid: false},
+			want:  "NULL",
+		},
+		{
+			desc:  "null uuid",
+			value: spanner.NullUUID{UUID: uuid.UUID{}, Valid: false},
 			want:  "NULL",
 		},
 
@@ -267,6 +278,14 @@ func TestDecodeColumn(t *testing.T) {
 			},
 			want: `[{"msg":"foo"}, {"msg":"bar"}]`,
 		},
+		{
+			desc: "array uuid",
+			value: []spanner.NullUUID{
+				{UUID: uuid.MustParse("1778a92d-dcdb-4e7c-a515-b6f953b59e54"), Valid: true},
+				{UUID: uuid.MustParse("7cdd7424-867d-4293-8597-dc07f14ac733"), Valid: true},
+			},
+			want: `[1778a92d-dcdb-4e7c-a515-b6f953b59e54, 7cdd7424-867d-4293-8597-dc07f14ac733]`,
+		},
 
 		// array nullable
 		{
@@ -317,6 +336,11 @@ func TestDecodeColumn(t *testing.T) {
 		{
 			desc:  "null array json",
 			value: []spanner.NullJSON(nil),
+			want:  "NULL",
+		},
+		{
+			desc:  "null array uuid",
+			value: []spanner.NullUUID(nil),
 			want:  "NULL",
 		},
 
