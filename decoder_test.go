@@ -341,7 +341,7 @@ func TestDecodeColumn(t *testing.T) {
 			want:  "NULL",
 		},
 		{
-			desc:  "null array json",
+			desc:  "null array interval",
 			value: []spanner.NullInterval(nil),
 			want:  "NULL",
 		},
